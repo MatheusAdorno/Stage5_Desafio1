@@ -44,6 +44,14 @@ function countDown() {
       return;
     }
 
+    if (minutes <= 5) {
+      buttonLessTime.setAttribute('disabled', true);
+      buttonLessTime.classList.add('disabled');
+    } else {
+      buttonLessTime.removeAttribute('disabled', true);
+      buttonLessTime.classList.remove('disabled');
+    }
+
     countDown();
   }, 1000);
 };
@@ -79,6 +87,11 @@ buttonStop.addEventListener('click', function() {
   sound.pressButton();
 
   reset();
+
+  if (minutes >= 5) {
+    buttonLessTime.removeAttribute('disabled', true);
+    buttonLessTime.classList.remove('disabled');
+  }
 });
 
 buttonMoreTime.addEventListener('click', function() {
@@ -88,21 +101,36 @@ buttonMoreTime.addEventListener('click', function() {
   buttonLessTime.removeAttribute('disabled');
   buttonLessTime.classList.remove('disabled');
 
+  if (minutes > 0) {
+    buttonPlay.removeAttribute('disabled', true);
+    buttonPlay.classList.remove('disabled');
+  } 
+
   sound.pressButton();
 });
 
 buttonLessTime.addEventListener('click', function() {
+  console.log(minutes)
   
   if(minutes > 5) {
     minutes -= 5;
     minutesDisplay.textContent = String(minutes).padStart(2, '0');
   }
-  else if(minutes == 5) {
+  else if(minutes <= 5) {
     minutes -= 5;
     minutesDisplay.textContent = String(minutes).padStart(2, '0');
     buttonLessTime.setAttribute('disabled', true);
     buttonLessTime.classList.add('disabled');
   };
+
+  if (minutes < 5) {
+    buttonPlay.setAttribute('disabled', true);
+    buttonPlay.classList.add('disabled');
+
+    buttonLessTime.setAttribute('disabled', true);
+    buttonLessTime.classList.add('disabled');
+  } 
+
   sound.pressButton();
 });
 
